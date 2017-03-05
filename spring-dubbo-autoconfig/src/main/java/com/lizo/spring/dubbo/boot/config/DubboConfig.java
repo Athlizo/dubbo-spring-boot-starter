@@ -17,11 +17,8 @@ public class DubboConfig {
     @Bean
     @ConfigurationProperties(prefix = "dubbo.application")
     public ApplicationConfig applicationConfig() {
-        ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setName("default-application-name" + new Date().getTime());
         return new ApplicationConfig();
     }
-
 
     @Bean
     @ConfigurationProperties(prefix = "dubbo.registry")
