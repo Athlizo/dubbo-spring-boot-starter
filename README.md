@@ -82,7 +82,7 @@ you can define a dubbo filter as a Spring bean which extend AbstractDubboProvide
         }
     }
 ```
-if you want more custom , you can using origin dubbo filter annotaion @activate with a spring bean implement extend AbstractDubboFilterSupport 
+if you want more custom , you can using origin dubbo filter annotaion @activate with a spring bean extend AbstractDubboFilterSupport 
 ```
     @Bean
     CustomFilter customFilter(){
