@@ -19,7 +19,7 @@ public class ProviderApplication {
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext ctx = new SpringApplicationBuilder()
                 .sources(ProviderApplication.class)
-                .web(false) //把项目设置成非web环境
+                .web(false)
                 .run(args);
         new CountDownLatch(1).await();
     }

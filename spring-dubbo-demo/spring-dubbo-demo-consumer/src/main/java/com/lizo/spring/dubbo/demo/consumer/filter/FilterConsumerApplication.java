@@ -39,7 +39,7 @@ public class FilterConsumerApplication {
     }
 
     static class ConsumerFilter extends AbstractDubboConsumerFilterSupport {
-        protected Result invoke(Invoker<?> invoker, Invocation invocation) {
+        public Result invoke(Invoker<?> invoker, Invocation invocation) {
             System.out.println("ConsumerFilter");
             return invoker.invoke(invocation);
         }

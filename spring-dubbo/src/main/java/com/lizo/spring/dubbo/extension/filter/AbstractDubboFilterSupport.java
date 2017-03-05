@@ -17,14 +17,13 @@ import java.util.concurrent.ConcurrentMap;
  * Created by lizhou on 2017/3/3/003.
  */
 
-public abstract class AbstractDubboFilterSupport extends AbstractDubboExtensionWrapper<Filter> {
+public abstract class AbstractDubboFilterSupport extends AbstractDubboExtensionWrapper<Filter> implements Filter {
 
 
     public AbstractDubboFilterSupport() {
         super(Filter.class);
     }
 
-    protected abstract Result invoke(Invoker<?> invoker, Invocation invocation);
 
 
 }

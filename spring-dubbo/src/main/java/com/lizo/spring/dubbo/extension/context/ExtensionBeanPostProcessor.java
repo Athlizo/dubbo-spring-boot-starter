@@ -31,14 +31,12 @@ public class ExtensionBeanPostProcessor implements BeanPostProcessor,PriorityOrd
                 activate = extension.getClass().getAnnotation(Activate.class);
                 extensionLoader.addExtension(beanName, extension.getClass());
             } else {
-                holder.set(this);
+                holder.set(bean);
                 extensionLoader.addExtension(beanName, bean.getClass());
             }
 
-
             ConfigurablePropertyAccessor beanWrapper = PropertyAccessorFactory.forDirectFieldAccess(extensionLoader);
             Map<String, Activate> cachedActivates = (Map<String, Activate>) beanWrapper.getPropertyValue("cachedActivates");
-
             ConcurrentMap<String, Holder<Object>> cachedInstances = (ConcurrentMap<String, Holder<Object>>) beanWrapper.getPropertyValue("cachedInstances");
 
 
