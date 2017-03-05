@@ -49,10 +49,10 @@ public class AddServiceImpl implements AddService {
     }
 }
 ```
-consumer bean:
-
-### @Component
+### consumer bean:
 ```
+ @Component
+
 public class ConsumerAction {
 
     @Reference
