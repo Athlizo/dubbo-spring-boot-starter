@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by lizhou on 2017/2/25/025.
+ * Created by lizo on 2017/2/25
  */
 @Configuration
 public class AnnotationBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {

@@ -24,43 +24,6 @@ public abstract class AbstractDubboFilterSupport extends AbstractDubboExtensionW
         super(Filter.class);
     }
 
-    public AbstractDubboFilterSupport(String name) {
-        super(Filter.class);
-        super.name = name;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-        if (name == null) {
-            name = this.getClass().getName();
-        }
-
-        Holder holder = new Holder<Object>();
-        Activate activate = this.getClass().getAnnotation(Activate.class);
-        if (activate == null) {
-            Filter filter = getDefaultFilter();
-            holder.set(filter);
-            activate = filter.getClass().getAnnotation(Activate.class);
-            extensionLoader.addExtension(name, filter.getClass());
-        } else {
-            holder.set(this);
-            extensionLoader.addExtension(name, this.getClass());
-        }
-
-
-        ConfigurablePropertyAccessor beanWrapper = PropertyAccessorFactory.forDirectFieldAccess(extensionLoader);
-        Map<String, Activate> cachedActivates = (Map<String, Activate>) beanWrapper.getPropertyValue("cachedActivates");
-
-        ConcurrentMap<String, Holder<Object>> cachedInstances = (ConcurrentMap<String, Holder<Object>>) beanWrapper.getPropertyValue("cachedInstances");
-
-
-        cachedInstances.put(name, holder);
-        cachedActivates.put(name, activate);
-    }
-
-    protected abstract Filter getDefaultFilter();
-
     protected abstract Result invoke(Invoker<?> invoker, Invocation invocation);
 
 

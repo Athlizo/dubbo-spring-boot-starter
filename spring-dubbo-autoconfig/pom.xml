@@ -31,5 +31,15 @@
             <artifactId>spring-boot</artifactId>
             <version>1.4.1.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>1.4.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>lizo.spring.dubbo</groupId>
+            <artifactId>spring-dubbo</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 </project>

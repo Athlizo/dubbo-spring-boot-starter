@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by lizhou on 2017/2/25/025.
+ * Created by lizo on 2017/2/25
  */
 @Configuration
 public class EnableDubboConfiguration {

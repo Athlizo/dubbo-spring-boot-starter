@@ -1,4 +1,4 @@
-package com.lizo.spring.dubbo.demo.consumer.simpleexample;
+package com.lizo.spring.dubbo.demo.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lizo.spring.dubbo.demo.DemoApi;

@@ -21,9 +21,9 @@ public class DubboContextInitializer implements ApplicationContextInitializer<Co
 
     public class DubboBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
         public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-            RootBeanDefinition definition = new RootBeanDefinition(
-                    AnnotationBeanDefinitionRegistrar.class);
-            registry.registerBeanDefinition("annotationBeanDefinitionRegistrar", definition);
+//            RootBeanDefinition definition = new RootBeanDefinition(
+//                    AnnotationBeanDefinitionRegistrar.class);
+//            registry.registerBeanDefinition("annotationBeanDefinitionRegistrar", definition);
         }
 
         public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {

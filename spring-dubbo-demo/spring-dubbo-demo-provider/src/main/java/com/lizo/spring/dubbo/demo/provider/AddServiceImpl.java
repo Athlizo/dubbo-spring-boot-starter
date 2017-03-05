@@ -1,4 +1,4 @@
-package com.lizo.spring.dubbo.demo.provider.simpleexample;
+package com.lizo.spring.dubbo.demo.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.lizo.spring.dubbo.demo.DemoApi;

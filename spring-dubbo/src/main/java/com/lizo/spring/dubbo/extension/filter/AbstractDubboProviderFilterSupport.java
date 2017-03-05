@@ -10,8 +10,7 @@ import com.alibaba.dubbo.rpc.Filter;
  */
 public abstract class AbstractDubboProviderFilterSupport extends AbstractDubboFilterSupport {
 
-    @Override
-    protected Filter getDefaultFilter() {
+    public Filter getDefaultExtension() {
         return new ProviderActiveFilter(this);
     }
 

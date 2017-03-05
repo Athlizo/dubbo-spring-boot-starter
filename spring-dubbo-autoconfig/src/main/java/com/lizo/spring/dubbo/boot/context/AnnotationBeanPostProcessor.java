@@ -13,23 +13,25 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by lizhou on 2017/2/28/28.
  */
-public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, ApplicationContextAware, BeanPostProcessor {
+public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, ApplicationContextAware, BeanPostProcessor, ApplicationListener {
     private List<String> basePackages = new ArrayList<String>();
 
     public AnnotationBeanPostProcessor(List<String> basePackages) {
@@ -41,6 +43,9 @@ public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, Ap
     private final Set<ServiceConfig<?>> serviceConfigs = new ConcurrentHashSet<ServiceConfig<?>>();
 
     private final ConcurrentMap<String, ReferenceBean<?>> referenceConfigs = new ConcurrentHashMap<String, ReferenceBean<?>>();
+
+    private final Map<Object, Method> methodRefer = new HashMap<Object, Method>();
+    private final Map<Object, Field> fieldRefer = new HashMap<Object, Field>();
 
 
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -160,35 +165,39 @@ public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, Ap
                     && method.getParameterTypes().length == 1
                     && Modifier.isPublic(method.getModifiers())
                     && !Modifier.isStatic(method.getModifiers())) {
-                try {
-                    Reference reference = method.getAnnotation(Reference.class);
-                    if (reference != null) {
-                        Object value = refer(reference, method.getParameterTypes()[0]);
-                        if (value != null) {
-                            method.invoke(bean);
-                        }
-                    }
-                } catch (Throwable e) {
-                }
+
+                methodRefer.put(bean, method);
+
             }
         }
         Field[] fields = bean.getClass().getDeclaredFields();
         for (Field field : fields) {
-            try {
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                Reference reference = field.getAnnotation(Reference.class);
-                if (reference != null) {
-                    Object value = refer(reference, field.getType());
-                    if (value != null) {
-                        field.set(bean, value);
-                    }
-                }
-            } catch (Throwable e) {
-            }
+            fieldRefer.put(bean, field);
         }
         return bean;
+    }
+
+    private void referCall(Object bean, Field field) throws IllegalAccessException {
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+        Reference reference = field.getAnnotation(Reference.class);
+        if (reference != null) {
+            Object value = refer(reference, field.getType());
+            if (value != null) {
+                field.set(bean, value);
+            }
+        }
+    }
+
+    private void referCall(Object bean, Method method) throws IllegalAccessException, InvocationTargetException {
+        Reference reference = method.getAnnotation(Reference.class);
+        if (reference != null) {
+            Object value = refer(reference, method.getParameterTypes()[0]);
+            if (value != null) {
+                method.invoke(bean);
+            }
+        }
     }
 
     private Object refer(Reference reference, Class<?> referenceClass) { //method.getParameterTypes()[0]
@@ -264,4 +273,21 @@ public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, Ap
         return false;
     }
 
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event instanceof ContextRefreshedEvent) {
+            try {
+                for (Map.Entry<Object, Method> objectMethodEntry : methodRefer.entrySet()) {
+                    referCall(objectMethodEntry.getKey(), objectMethodEntry.getValue());
+                }
+
+                for (Map.Entry<Object, Field> objectFieldEntry : fieldRefer.entrySet()) {
+                    referCall(objectFieldEntry.getKey(), objectFieldEntry.getValue());
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
