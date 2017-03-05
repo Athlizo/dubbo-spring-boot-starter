@@ -22,7 +22,7 @@ public class ConsumerApplication {
                 .sources(ConsumerApplication.class)
                 .web(false)
                 .run(args);
-        ctx.getBean(ConsumerAction.class).add(21,25);
+        ctx.getBean(ConsumerAction.class).add(21, 25);
         new CountDownLatch(1).await();
     }
 }

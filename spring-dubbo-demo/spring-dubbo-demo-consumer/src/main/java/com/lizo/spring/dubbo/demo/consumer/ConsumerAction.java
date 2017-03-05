@@ -13,8 +13,8 @@ public class ConsumerAction {
     @Reference
     private DemoApi demoApi;
 
-    public void add(int a,int b){
-        System.out.println("ret = " + demoApi.add(a,b));
+    public void add(int a, int b) {
+        System.out.println("ret = " + demoApi.add(a, b));
     }
 
 }

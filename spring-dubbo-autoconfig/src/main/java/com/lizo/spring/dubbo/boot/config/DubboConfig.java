@@ -1,21 +1,21 @@
 package com.lizo.spring.dubbo.boot.config;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 
 /**
- * Created by lizo on 2017/2/25
+ * Created by Administrator on 2017/3/5/005.
  */
 @Configuration
-public class EnableDubboConfiguration {
-
+public class DubboConfig {
     @Bean
-    @ConditionalOnMissingBean(ApplicationConfig.class)
+    @ConfigurationProperties(prefix = "dubbo.application")
     public ApplicationConfig applicationConfig() {
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("default-application-name" + new Date().getTime());
@@ -24,10 +24,14 @@ public class EnableDubboConfiguration {
 
 
     @Bean
-    @ConditionalOnMissingBean(RegistryConfig.class)
+    @ConfigurationProperties(prefix = "dubbo.registry")
     public RegistryConfig registryConfig() {
-        RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("multicast://224.5.6.7:1234");
-        return registryConfig;
+        return new RegistryConfig();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "dubbo.protocol")
+    public ProtocolConfig protocolConfig() {
+        return new ProtocolConfig();
     }
 }

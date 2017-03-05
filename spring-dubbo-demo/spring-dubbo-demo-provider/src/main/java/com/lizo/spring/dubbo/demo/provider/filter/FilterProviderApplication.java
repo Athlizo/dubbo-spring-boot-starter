@@ -5,8 +5,6 @@ import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.rpc.*;
 import com.lizo.spring.dubbo.boot.annotation.EnableDubbo;
 import com.lizo.spring.dubbo.demo.provider.simpleexample.ProviderApplication;
-import com.lizo.spring.dubbo.extension.DubboExtensionWrapper;
-import com.lizo.spring.dubbo.extension.filter.AbstractDubboConsumerFilterSupport;
 import com.lizo.spring.dubbo.extension.filter.AbstractDubboFilterSupport;
 import com.lizo.spring.dubbo.extension.filter.AbstractDubboProviderFilterSupport;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
 public class FilterProviderApplication {
 
 
-
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext ctx = new SpringApplicationBuilder()
                 .sources(ProviderApplication.class)
@@ -36,7 +33,7 @@ public class FilterProviderApplication {
     }
 
     @Bean
-    ProviderFilter providerFilter(){
+    ProviderFilter providerFilter() {
         return new ProviderFilter();
     }
 
@@ -49,7 +46,7 @@ public class FilterProviderApplication {
 
 
     @Bean
-    CustomFilter customFilter(){
+    CustomFilter customFilter() {
         return new CustomFilter();
     }
 

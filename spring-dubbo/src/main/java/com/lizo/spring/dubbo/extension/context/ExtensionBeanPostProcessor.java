@@ -16,9 +16,9 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Created by lizo on 2017/3/5
  */
-public class ExtensionBeanPostProcessor implements BeanPostProcessor,PriorityOrdered{
+public class ExtensionBeanPostProcessor implements BeanPostProcessor, PriorityOrdered {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if(bean instanceof DubboExtensionWrapper){
+        if (bean instanceof DubboExtensionWrapper) {
             DubboExtensionWrapper dubboExtensionWrapper = (DubboExtensionWrapper) bean;
             Class c = dubboExtensionWrapper.getExtensionClass();
             ExtensionLoader extensionLoader = ExtensionLoader.getExtensionLoader(c);
@@ -54,4 +54,5 @@ public class ExtensionBeanPostProcessor implements BeanPostProcessor,PriorityOrd
     public int getOrder() {
         return HIGHEST_PRECEDENCE;
     }
+
 }

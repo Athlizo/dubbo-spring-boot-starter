@@ -1,4 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lizo.spring.dubbo.boot.config.EnableDubboConfiguration
-org.springframework.context.ApplicationContextInitializer=com.lizo.spring.dubbo.boot.context.DubboContextInitializer
 
 

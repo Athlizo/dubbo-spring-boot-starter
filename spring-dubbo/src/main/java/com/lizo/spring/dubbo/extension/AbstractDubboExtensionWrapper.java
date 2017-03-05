@@ -5,7 +5,7 @@ import org.springframework.core.Ordered;
 /**
  * Created by lizo on 2017/3/3
  */
-public abstract class AbstractDubboExtensionWrapper<T> implements DubboExtensionWrapper<T>,Ordered{
+public abstract class AbstractDubboExtensionWrapper<T> implements DubboExtensionWrapper<T>, Ordered {
     private Class<T> extensionClass;
 
     public AbstractDubboExtensionWrapper(Class<T> extensionClass) {

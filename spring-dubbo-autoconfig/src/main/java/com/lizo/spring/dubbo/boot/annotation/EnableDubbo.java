@@ -17,6 +17,7 @@
 package com.lizo.spring.dubbo.boot.annotation;
 
 import com.lizo.spring.dubbo.boot.config.AnnotationBeanDefinitionRegistrar;
+import com.lizo.spring.dubbo.boot.config.DubboConfig;
 import com.lizo.spring.dubbo.boot.config.ExtensionConfiguration;
 import org.springframework.context.annotation.Import;
 
@@ -25,7 +26,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@Import(value = {ExtensionConfiguration.class,AnnotationBeanDefinitionRegistrar.class})
+@Import(value = {DubboConfig.class, ExtensionConfiguration.class, AnnotationBeanDefinitionRegistrar.class})
 public @interface EnableDubbo {
 
     String[] basePackages() default {""};

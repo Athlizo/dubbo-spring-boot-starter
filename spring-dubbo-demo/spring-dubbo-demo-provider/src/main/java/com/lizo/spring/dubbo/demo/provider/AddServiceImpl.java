@@ -12,4 +12,5 @@ public class AddServiceImpl implements DemoApi {
     public int add(int a, int b) {
         return a + b;
     }
+
 }

@@ -4,8 +4,6 @@ package com.lizo.spring.dubbo.extension.filter;
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.rpc.Filter;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 /**
  * Created by lizhou on 2017/3/3/003.
