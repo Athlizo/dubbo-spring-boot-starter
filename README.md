@@ -34,12 +34,13 @@ public class Provider {
 then you can using com.alibaba.dubbo.config.annotation.Service and com.alibaba.dubbo.config.annotation.Reference on provider bean and consumer bean respectively.
 
 ### api interface :
-
+```
 public interface AddService {
     int add(int a, int b);
 }
+```
 ### provider bean:
-
+```
 @Service
 public class AddServiceImpl implements AddService {
     @Override
@@ -47,9 +48,11 @@ public class AddServiceImpl implements AddService {
         return a + b;
     }
 }
+```
 consumer bean:
 
 ### @Component
+```
 public class ConsumerAction {
 
     @Reference
@@ -59,5 +62,42 @@ public class ConsumerAction {
         System.out.println("ret = " + addService.add(a,b));
     }
 }
+```
 more details see demo project
 dubbo document see：http://dubbo.io/
+
+# extension
+## filter
+you can define a dubbo filter as a Spring bean which extend AbstractDubboProviderFilterSupport or AbstractDubboConsumerFilterSupport
+```
+    @Bean
+    ProviderFilter consumerFilter(){
+        return new ProviderFilter();
+    }
+
+    static class ProviderFilter extends AbstractDubboProviderFilterSupport {
+        public Result invoke(Invoker<?> invoker, Invocation invocation) {
+            System.out.println("ProviderFilter");
+            return invoker.invoke(invocation);
+        }
+    }
+```
+if you want more custom , you can using origin dubbo filter annotaion @activate with a spring bean implement extend AbstractDubboFilterSupport 
+```
+    @Bean
+    CustomFilter customFilter(){
+        return new CustomFilter();
+    }
+
+    @Activate(group = Constants.PROVIDER)
+    static class CustomFilter extends AbstractDubboFilterSupport {
+        public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+            System.out.println("CustomFilter");
+            return invoker.invoke(invocation);
+        }
+
+        public Filter getDefaultExtension() {
+            return this;
+        }
+    }
+  ```
