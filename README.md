@@ -1,6 +1,7 @@
 # spring-dubbo-parent
 dubbo-spring-boot-starter
 using dubbo with spring boot style 。this is based on dubbo 2.5.3 and spring boot 1.4.1.RELEASE
+document:[spring boot with dubbo](https://my.oschina.net/u/3039671/blog/848097)
 
 # how to use
 you can deploy dubbo properties in spring boot configuration file —— application.properties/ym
