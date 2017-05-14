@@ -8,11 +8,7 @@ import com.lizo.spring.dubbo.extension.AbstractDubboExtensionWrapper;
  */
 
 public abstract class AbstractDubboFilterSupport extends AbstractDubboExtensionWrapper<Filter> implements Filter {
-
-
     public AbstractDubboFilterSupport() {
         super(Filter.class);
     }
-
-
 }

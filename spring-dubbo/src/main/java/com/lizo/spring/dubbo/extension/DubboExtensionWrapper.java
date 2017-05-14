@@ -7,5 +7,6 @@ public interface DubboExtensionWrapper<T> {
 
     Class getExtensionClass();
 
+    //该返回对象必须有@Activate注解
     T getDefaultExtension();
 }
