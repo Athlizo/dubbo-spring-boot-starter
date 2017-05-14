@@ -5,7 +5,7 @@
     <parent>
         <artifactId>spring-dubbo-demo</artifactId>
         <groupId>lizo.spring.dubbo</groupId>
-        <version>0.0.1</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>lizo.spring.dubbo</groupId>
             <artifactId>spring-dubbo-autoconfig</artifactId>
-            <version>0.0.1</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -30,12 +30,12 @@
         <dependency>
             <groupId>lizo.spring.dubbo</groupId>
             <artifactId>spring-dubbo-demo-api</artifactId>
-            <version>0.0.1</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>lizo.spring.dubbo</groupId>
             <artifactId>spring-dubbo</artifactId>
-            <version>0.0.1</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

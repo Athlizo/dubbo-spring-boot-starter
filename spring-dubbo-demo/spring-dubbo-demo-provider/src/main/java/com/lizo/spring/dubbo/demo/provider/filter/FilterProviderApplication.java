@@ -12,6 +12,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.lizo.spring.dubbo.demo")
 @EnableDubbo(basePackages = "com.lizo.spring.dubbo.demo")
+@Import(value = ProviderApplication.class)
 public class FilterProviderApplication {
 
 
@@ -53,7 +55,7 @@ public class FilterProviderApplication {
     @Activate(group = Constants.PROVIDER)
     static class CustomFilter extends AbstractDubboFilterSupport {
         public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-            System.out.println("CustomFilter");
+            System.out.println("ProviderFilter2");
             return invoker.invoke(invocation);
         }
 

@@ -1,5 +1,7 @@
 package com.lizo.spring.dubbo.boot.context;
 
+import com.alibaba.dubbo.common.logger.Logger;
+import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.dubbo.config.*;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -46,6 +48,8 @@ public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, Ap
 
     private final Map<Object, Method> methodRefer = new HashMap<Object, Method>();
     private final Map<Object, Field> fieldRefer = new HashMap<Object, Field>();
+
+    private static final Logger logger = LoggerFactory.getLogger(Logger.class);
 
 
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -165,14 +169,36 @@ public class AnnotationBeanPostProcessor implements BeanFactoryPostProcessor, Ap
                     && method.getParameterTypes().length == 1
                     && Modifier.isPublic(method.getModifiers())
                     && !Modifier.isStatic(method.getModifiers())) {
+                try {
+                    Reference reference = method.getAnnotation(Reference.class);
+                    if (reference != null) {
+//                        Object value = refer(reference, method.getParameterTypes()[0]);
+                        method.invoke(bean, new Object[]{});
+                        methodRefer.put(bean, method);
+                    }
 
-                methodRefer.put(bean, method);
+                } catch (Throwable e) {
+                    logger.error("Failed to init remote service reference at method " + name + " in class " + bean.getClass().getName() + ", cause: " + e.getMessage(), e);
+                }
+
 
             }
         }
         Field[] fields = bean.getClass().getDeclaredFields();
         for (Field field : fields) {
-            fieldRefer.put(bean, field);
+            try {
+                if (!field.isAccessible()) {
+                    field.setAccessible(true);
+                }
+                Reference reference = field.getAnnotation(Reference.class);
+                if (reference != null) {
+//                    Object value = refer(reference, field.getType());
+                    field.set(bean, null);
+                    fieldRefer.put(bean, field);
+                }
+            } catch (Throwable e) {
+                logger.error("Failed to init remote service reference at filed " + field.getName() + " in class " + bean.getClass().getName() + ", cause: " + e.getMessage(), e);
+            }
         }
         return bean;
     }
